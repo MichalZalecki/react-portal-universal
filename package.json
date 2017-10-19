@@ -4,7 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/tests/.*\\.spec\\.(ts|tsx|js)$",
+    "setupFiles": [
+      "./tests/setup/rafPolyFill.js"
+    ]
   },
   "repository": {
     "type": "git",
@@ -15,5 +29,23 @@
   "bugs": {
     "url": "https://github.com/MichalZalecki/react-portal-universal/issues"
   },
-  "homepage": "https://github.com/MichalZalecki/react-portal-universal#readme"
+  "homepage": "https://github.com/MichalZalecki/react-portal-universal#readme",
+  "devDependencies": {
+    "@types/cheerio": "^0.22.3",
+    "@types/jest": "^21.1.4",
+    "@types/react": "^16.0.14",
+    "@types/react-dom": "^16.0.1",
+    "jest": "^21.2.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "ts-jest": "^21.1.3",
+    "typescript": "^2.5.3"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2"
+  }
 }
