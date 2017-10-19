@@ -9,7 +9,7 @@ function canUseDOM() {
 }
 
 export function createUniversalPortal(children: any, selector: string) {
-  if (canUseDOM()) {
+  if (!canUseDOM()) {
     portals.push([children, selector]); // yes, mutation (҂◡_◡)
     return null;                        // do not render anything on the server
   }

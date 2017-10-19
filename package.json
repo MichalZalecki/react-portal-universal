@@ -1,6 +1,6 @@
 {
   "name": "react-portal-universal",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -21,6 +21,7 @@
       "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "/tests/.*\\.spec\\.(ts|tsx|js)$",
+    "testEnvironment": "node",
     "setupFiles": [
       "./tests/setup/rafPolyFill.js"
     ]
