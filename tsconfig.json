@@ -3,6 +3,11 @@
     "target": "ES2015",
     "module": "commonjs",
     "jsx": "react",
-    "strict": true
-  }
+    "strict": true,
+    "outDir": "lib",
+    "declaration": true
+  },
+  "include": [
+    "src/**/*"
+  ]
 }

@@ -1,6 +1,6 @@
 import * as ReactDOM from "react-dom";
 
-type ChildrenSelectorTuple = [any, string];
+export type ChildrenSelectorTuple = [any, string];
 
 const portals: ChildrenSelectorTuple[] = [];
 
