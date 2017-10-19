@@ -6,7 +6,7 @@ export function appendUniversalPortals(html: string) {
   const $ = load(html);
   flushUniversalPortals().forEach(([children, selector]) => {
     const markup = ReactDOMServer.renderToStaticMarkup(children);
-    $(selector).append(markup);
+    $(markup).attr("data-react-universal-portal", "").appendTo((selector as any))
   });
   return $.html();
 }
