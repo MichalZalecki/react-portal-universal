@@ -22,3 +22,11 @@ export function flushUniversalPortals(): ChildrenSelectorTuple[] {
   portals.length = 0;                   // it's important to flush one and only one time per render
   return copy;
 }
+
+export function removeUniversalPortals() {
+  if (canUseDOM()) {
+    document.querySelectorAll("[data-react-universal-portal]").forEach(function (node) {
+      node.remove();
+    });
+  }
+}
