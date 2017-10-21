@@ -1,10 +1,10 @@
 {
   "name": "react-portal-universal",
-  "version": "0.0.3",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Wrapper for React's createPortal allowing for rendering portals on the server",
   "main": "lib/index.js",
   "scripts": {
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "build": "tsc",
     "test": "jest"
   },
@@ -53,5 +53,13 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.2"
-  }
+  },
+  "keywords": [
+    "react",
+    "react-dom",
+    "react-portal",
+    "createPortal",
+    "SSR",
+    "universal"
+  ]
 }
