@@ -1,7 +1,7 @@
 # React Portal Universal
 
 React Portals Universal is a library providing a wrapper for React `createPortal`. The goal of the
-library is to render portals also on the server. React's DOM `creactePortal` requires a DOM node
+library is to render portals also on the server. React's DOM `createPortal` requires a DOM node
 which isn't suitable for the NodeJS environment.
 
 ## Why?
