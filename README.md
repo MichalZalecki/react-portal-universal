@@ -35,12 +35,6 @@ const Head = (props) => {
 };
 
 class App extends React.Component {
-  componentDidMount() {
-    // remove static markup and allow React
-    // to render only actual components
-    removeUniversalPortals();
-  }
-
   render() {
     return (
       <article>
@@ -57,7 +51,11 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.hydrate(<App />, document.querySelector("#root"));
+// remove static markup and allow React
+// to render only actual components
+removeUniversalPortals();
+
+ReactDOM.render(<App />, document.querySelector("#root"));
 ```
 
 ```js
