@@ -3,8 +3,12 @@ import { load }  from "cheerio";
 import { flushUniversalPortals } from "./index";
 
 export function appendUniversalPortals(html: string) {
+  const portals = flushUniversalPortals();
+  if (!portals.length) {
+    return html;
+  }
   const $ = load(html);
-  flushUniversalPortals().forEach(([children, selector]) => {
+  portals.forEach(([children, selector]) => {
     const markup = ReactDOMServer.renderToStaticMarkup(children);
     $(markup).attr("data-react-universal-portal", "").appendTo((selector as any))
   });
