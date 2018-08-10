@@ -25,7 +25,7 @@ export function flushUniversalPortals(): ChildrenSelectorTuple[] {
 
 export function removeUniversalPortals() {
   if (canUseDOM()) {
-    document.querySelectorAll("[data-react-universal-portal]").forEach(function (node) {
+    Array.prototype.slice.call(document.querySelectorAll("[data-react-universal-portal]")).forEach(function (node) {
       node.remove();
     });
   }
