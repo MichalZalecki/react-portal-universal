@@ -27,5 +27,25 @@ describe("server-side", () => {
       expect(withStaticMarkup.includes("<h1>Hello, World!</h1>"));
       expect(withStaticMarkup).toMatchSnapshot();
     });
+
+    it("doesn't render non-latin characters as HTML entities", () => {
+      const html = `
+        <html>
+          <head>
+            <meta charset="utf-8" />
+          </head>
+          <body>
+            <div id="root"></div>
+          </body>
+        </html>
+      `;
+      createUniversalPortal(<title>Привет, мир!</title>, "head");
+      createUniversalPortal(<h1>Привет, мир!</h1>, "body");
+      const withStaticMarkup = appendUniversalPortals(html);
+
+      expect(withStaticMarkup.includes("<title>Привет, мир!</title>"));
+      expect(withStaticMarkup.includes("<h1>Привет, мир!</h1>"));
+      expect(withStaticMarkup).toMatchSnapshot();
+    });
   });
 });
