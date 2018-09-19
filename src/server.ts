@@ -12,5 +12,5 @@ export function appendUniversalPortals(html: string) {
     const markup = ReactDOMServer.renderToStaticMarkup(children);
     $(markup).attr("data-react-universal-portal", "").appendTo((selector as any))
   });
-  return $.html();
+  return $.html({ decodeEntities: false });
 }
