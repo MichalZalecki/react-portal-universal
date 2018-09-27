@@ -67,6 +67,16 @@ const body     = ReactDOMServer.renderToString(<App />));
 const template = fs.readFileSync(path.resolve("build/index.html"), "utf8");
 const html     = template.replace("<div id=\"root\"></div>", `<div id="root">${body}</div>`);
 const markup   = appendUniversalPortals(html);
+/*
+you can pass an option object to the parser
+const options = {
+    withDomLvl1: true,
+    normalizeWhitespace: false,
+    xmlMode: false,
+    decodeEntities: true
+}
+const markup   = appendUniversalPortals(html, options);
+*/
 
 res.status(200).send(markup);
 ```
