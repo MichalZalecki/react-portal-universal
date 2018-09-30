@@ -4,6 +4,10 @@ React Portals Universal is a library providing a wrapper for React `createPortal
 library is to render portals also on the server. React's DOM `createPortal` requires a DOM node
 which isn't suitable for the NodeJS environment.
 
+## Disclaimer
+
+Treat this library as an idea only until [issues/#5](https://github.com/MichalZalecki/react-portal-universal/issues/5) is fixed.
+
 ## Why?
 
 Thanks to React Portal Universal you can now render portals on the server. But why would I like to do that in the first place? That's a great question!
