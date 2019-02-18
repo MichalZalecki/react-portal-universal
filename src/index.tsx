@@ -1,14 +1,12 @@
+import * as React from 'react';
 import * as ReactDOM from "react-dom";
-
-export type ChildrenSelectorTuple = [any, string];
-
-const portals: ChildrenSelectorTuple[] = [];
+import { PortalConsumer, ChildrenSelectorTuple } from "./PortalManager";
 
 function canUseDOM() {
   return !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 }
 
-export function createUniversalPortal(children: any, selector: string) {
+function createUniversalPortal(children: React.ReactNode, selector: string, portals: ChildrenSelectorTuple[]) {
   if (!canUseDOM()) {
     portals.push([children, selector]); // yes, mutation (҂◡_◡)
     return null;                        // do not render anything on the server
@@ -17,16 +15,16 @@ export function createUniversalPortal(children: any, selector: string) {
   return (ReactDOM as any).createPortal(children, document.querySelector(selector));
 }
 
-export function flushUniversalPortals(): ChildrenSelectorTuple[] {
-  const copy = portals.slice();
-  portals.length = 0;                   // it's important to flush one and only one time per render
-  return copy;
-}
-
-export function removeUniversalPortals() {
+export function prepareClientPortals() {
   if (canUseDOM()) {
     Array.prototype.slice.call(document.querySelectorAll("[data-react-universal-portal]")).forEach(function (node: Element) {
       node.remove();
     });
   }
 }
+
+export const UniversalPortal: React.SFC<{ selector: string }> = ({ children, selector }) => (
+  <PortalConsumer>
+    {(portals: ChildrenSelectorTuple[]) => createUniversalPortal(children, selector, portals)}
+  </PortalConsumer>
+);

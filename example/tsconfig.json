@@ -2,14 +2,10 @@
   "compilerOptions": {
     "target": "ES2015",
     "module": "commonjs",
+    "moduleResolution": "node",
     "jsx": "react",
     "strict": true,
-    "outDir": "",
     "declaration": true,
     "allowSyntheticDefaultImports": true
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": []
+  }
 }
