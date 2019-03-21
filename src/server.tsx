@@ -22,8 +22,12 @@ export class ServerPortal {
 
     const $ = load(html);
     this.portals.forEach(([children, selector]) => {
-      const markup = ReactDOMServer.renderToStaticMarkup(children);
-      $(markup).attr("data-react-universal-portal", "").appendTo((selector as any))
+      try {
+        const markup = ReactDOMServer.renderToStaticMarkup(children);
+        $(markup).attr("data-react-universal-portal", "").appendTo((selector as any))
+      } catch (error) {
+        console.warn('Unable to render portal server-side:\n' + error.message || error.toString().split('\n')[0]);
+      }
     });
 
     // it's important to flush one and only one time per render
