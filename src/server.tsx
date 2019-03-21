@@ -8,14 +8,13 @@ export class ServerPortal {
 
   constructor() {
     this.portals = [];
-    this.appendUniversalPortals = this.appendUniversalPortals.bind(this);
   }
 
   collectPortals(children: React.ReactNode) {
     return <PortalManager portals={this.portals}>{children}</PortalManager>;
   }
 
-  appendUniversalPortals(html: string) {
+  appendUniversalPortals = (html: string) {
     if (!this.portals.length) {
       return html;
     }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { UniversalPortal } from '../';
 
 export default () => (
-  <React.Fragment>
+  <>
     <div id="modal" />
     <main>
       Try disabling JS and refresh this page.
@@ -21,5 +21,5 @@ export default () => (
         <meta name="description" content="Lorem ipsum..." />
       </UniversalPortal>
     </main>
-  </React.Fragment>
+  </>
 )

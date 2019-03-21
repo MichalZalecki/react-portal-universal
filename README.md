@@ -74,7 +74,8 @@ res.status(200).send(markup);
 ## Configure
 
 It is important to make sure that React application code is using the same instance of the library
-as code responsible for handling rendering on the server. The problem occurs when you import
+as code responsible for handling rendering on the server. In other words, there must be only one
+instance of the portals variable in the process. The problem occurs when you import
 `ServerPortal` from `node_modules` on the server but use a bundle with its own instance to
 render an application.
 
