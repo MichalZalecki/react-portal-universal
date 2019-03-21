@@ -1,2 +1,7 @@
 node_modules
-lib
+index.js
+index.d.ts
+PortalManager.js
+PortalManager.d.ts
+server.js
+server.d.ts
