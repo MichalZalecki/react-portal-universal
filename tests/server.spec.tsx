@@ -13,10 +13,10 @@ import { renderToString } from "react-dom/server";
 const Component = () => {
   return (
     <body>
-      <Portal name="body" nodeSelector="#portal-selector">
+      <Portal name="body" selector="#portal-selector">
         <div>Hello world!</div>
       </Portal>
-      <Portal name="head" nodeSelector="head">
+      <Portal name="head" selector="head">
         <title>Hello world!</title>
       </Portal>
       <div>Hey</div>
@@ -29,10 +29,10 @@ describe("server-side", () => {
     const extractor = new PortalExtractor();
     const html = renderToString(extractor.collectPortals(<Component />));
 
-    expect(extractor.getPortal("head")).toBe(
+    expect(extractor.getPortals().head).toBe(
       '<title data-universal-portal="" data-reactroot="">Hello world!</title>'
     );
-    expect(extractor.getPortal("body")).toBe(
+    expect(extractor.getPortals().body).toBe(
       '<div data-universal-portal="" data-reactroot="">Hello world!</div>'
     );
   });

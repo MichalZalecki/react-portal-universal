@@ -12,9 +12,9 @@ Treat this library as an idea only until [issues/#5](https://github.com/MichalZa
 
 Thanks to React Portal Universal you can now render portals on the server. But why would I like to do that in the first place? That's a great question!
 
-* Render elements into `<head>`. You can now manage your title, meta description or Open Graph meta data (Facebook doesn't run JavaScript) in the same way as you'd do that in [react-helmet](https://github.com/nfl/react-helmet) only you don't need a specialized library. Client-side of React Portal Universal is just under 1KB!
-* Aiming to make your page working also without JavaScript enabled.
-* If your JavaScript-powered components (e.g. modals) contain crucial information you would like to be easily indexed by different search engines.
+- Render elements into `<head>`. You can now manage your title, meta description or Open Graph meta data (Facebook doesn't run JavaScript) in the same way as you'd do that in [react-helmet](https://github.com/nfl/react-helmet) only you don't need a specialized library. Client-side of React Portal Universal is just under 1KB!
+- Aiming to make your page working also without JavaScript enabled.
+- If your JavaScript-powered components (e.g. modals) contain crucial information you would like to be easily indexed by different search engines.
 
 ## Install
 
@@ -29,13 +29,12 @@ Render article's title and meta description into the `<head>`
 ```jsx
 // CLIENT
 
-import { createUniversalPortal, removeUniversalPortals } from "react-portal-universal";
+import Portal from "react-portal-universal";
 
-const Head = (props) => {
-  const { children } = props;
+const Head = ({ children }) => {
   // pass selector for a document.querySelector
   // instead of a DOM node like in createPortal
-  return createUniversalPortal(children, "head");
+  return <Portal name="head" selector="">{children}</Portal>
 };
 
 class App extends React.Component {

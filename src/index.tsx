@@ -46,13 +46,13 @@ export const PortalCollector = ({
 type PortalProps = {
   children: React.ReactNode;
   name: string;
-  nodeSelector: string;
+  selector: string;
 };
 
 export default function Portal({
   children,
   name,
-  nodeSelector,
+  selector,
 }: PortalProps): React.ReactPortal | null {
   const context = useContext(PortalCollectorContext);
   context?.collectPortal?.({
@@ -73,11 +73,11 @@ export default function Portal({
   const [_, forceUpdate] = React.useState({});
 
   useEffect(() => {
-    portalNode.current = document.querySelector(nodeSelector);
+    portalNode.current = document.querySelector(selector);
     removeUniversalPortals();
 
     forceUpdate({});
-  }, [forceUpdate, nodeSelector]);
+  }, [forceUpdate, selector]);
 
   return portalNode.current ? createPortal(children, portalNode.current) : null;
 }

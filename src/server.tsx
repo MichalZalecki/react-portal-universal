@@ -24,7 +24,9 @@ export class PortalExtractor {
     );
   };
 
-  getPortal(name: string): string {
-    return renderToString(<>{this._portals[name]}</>);
+  getPortals(): Record<string, string> {
+    return Object.entries(this._portals).reduce((acc, cur) => {
+      return { ...acc, [cur[0]]: renderToString(<>{cur[1]}</>) };
+    }, {});
   }
 }

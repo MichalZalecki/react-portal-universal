@@ -16,10 +16,11 @@ describe("client-side", () => {
   describe("createUniversalPortal", () => {
     it("does not render anything on the server", () => {
       render(
-        <Portal name="head" nodeSelector="body">
+        <Portal name="head" selector="body">
           <title>Hello world!</title>
         </Portal>
       );
+
       expect(screen.getByText("Hello world!")).not.toBe(null);
     });
   });
