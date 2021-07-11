@@ -23,7 +23,14 @@ const Component = () => {
 };
 
 describe("server-side", () => {
-  it("does not render anything on the server", () => {
+  it("should don't render portal on server", () => {
+    const extractor = new PortalExtractor();
+    const html = renderToString(extractor.collectPortals(<Component />));
+
+    expect(html).toBe("<body><div>Hey</div></body>")
+  });
+
+  it("should be able to get portalContent through extractor", () => {
     const extractor = new PortalExtractor();
     renderToString(extractor.collectPortals(<Component />));
 
@@ -33,5 +40,5 @@ describe("server-side", () => {
     expect(extractor.getPortals().body).toBe(
       '<div data-universal-portal="" data-reactroot="">Hello world!</div>'
     );
-  });
+  })
 });
