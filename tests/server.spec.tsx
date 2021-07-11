@@ -3,9 +3,7 @@
  */
 import "@testing-library/jest-dom/extend-expect";
 import "@testing-library/jest-dom";
-import { JSDOM } from "jsdom";
 import React from "react";
-import { render, screen } from "@testing-library/react";
 import Portal from "./../src/index";
 import { PortalExtractor } from "../src/server";
 import { renderToString } from "react-dom/server";
@@ -27,7 +25,7 @@ const Component = () => {
 describe("server-side", () => {
   it("does not render anything on the server", () => {
     const extractor = new PortalExtractor();
-    const html = renderToString(extractor.collectPortals(<Component />));
+    renderToString(extractor.collectPortals(<Component />));
 
     expect(extractor.getPortals().head).toBe(
       '<title data-universal-portal="" data-reactroot="">Hello world!</title>'
