@@ -64,7 +64,7 @@ ReactDOM.render(<App />, document.querySelector("#root"));
 
 const { PortalCollector } = require("react-portal-universal/lib/server");
 
-const extractor = new PortalCollector()
+const extractor = new PortalExtractor()
 const body = ReactDOMServer.renderToString(extractor.collectPortals(<App />)));
 const headTag = extractor.getPortals().head
 const template = fs.readFileSync(path.resolve("build/index.html"), "utf8");
