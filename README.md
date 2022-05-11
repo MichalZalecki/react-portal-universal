@@ -62,7 +62,7 @@ ReactDOM.render(<App />, document.querySelector("#root"));
 ```js
 // SERVER
 
-const { PortalCollector } = require("react-portal-universal/lib/server");
+const { PortalExtractor } = require("react-portal-universal/lib/server");
 
 const extractor = new PortalExtractor()
 const body = ReactDOMServer.renderToString(extractor.collectPortals(<App />)));
