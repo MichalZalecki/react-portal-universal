@@ -12,9 +12,9 @@ Treat this library as an idea only until [issues/#5](https://github.com/MichalZa
 
 Thanks to React Portal Universal you can now render portals on the server. But why would I like to do that in the first place? That's a great question!
 
-* Render elements into `<head>`. You can now manage your title, meta description or Open Graph meta data (Facebook doesn't run JavaScript) in the same way as you'd do that in [react-helmet](https://github.com/nfl/react-helmet) only you don't need a specialized library. Client-side of React Portal Universal is just under 1KB!
-* Aiming to make your page working also without JavaScript enabled.
-* If your JavaScript-powered components (e.g. modals) contain crucial information you would like to be easily indexed by different search engines.
+- Render elements into `<head>`. You can now manage your title, meta description or Open Graph meta data (Facebook doesn't run JavaScript) in the same way as you'd do that in [react-helmet](https://github.com/nfl/react-helmet) only you don't need a specialized library. Client-side of React Portal Universal is just under 1KB!
+- Aiming to make your page working also without JavaScript enabled.
+- If your JavaScript-powered components (e.g. modals) contain crucial information you would like to be easily indexed by different search engines.
 
 ## Install
 
@@ -29,13 +29,16 @@ Render article's title and meta description into the `<head>`
 ```jsx
 // CLIENT
 
-import { createUniversalPortal, removeUniversalPortals } from "react-portal-universal";
+import Portal from "react-portal-universal";
 
-const Head = (props) => {
-  const { children } = props;
+const Head = ({ children }) => {
   // pass selector for a document.querySelector
   // instead of a DOM node like in createPortal
-  return createUniversalPortal(children, "head");
+  return (
+    <Portal name="head" selector="head">
+      {children}
+    </Portal>
+  );
 };
 
 class App extends React.Component {
@@ -47,17 +50,11 @@ class App extends React.Component {
           <meta name="description" content="Lorem ipsum..." />
         </Head>
         <h1>Hello, World!</h1>
-        <p>
-          Lorem ipsum sit doloret um.
-        </p>
+        <p>Lorem ipsum sit doloret um.</p>
       </article>
     );
   }
 }
-
-// remove static markup and allow React
-// to render only actual components
-removeUniversalPortals();
 
 ReactDOM.render(<App />, document.querySelector("#root"));
 ```
@@ -65,12 +62,13 @@ ReactDOM.render(<App />, document.querySelector("#root"));
 ```js
 // SERVER
 
-const { appendUniversalPortals } = require("react-portal-universal/lib/server");
+const { PortalExtractor } = require("react-portal-universal/lib/server");
 
-const body     = ReactDOMServer.renderToString(<App />));
+const extractor = new PortalExtractor()
+const body = ReactDOMServer.renderToString(extractor.collectPortals(<App />)));
+const headTag = extractor.getPortals().head
 const template = fs.readFileSync(path.resolve("build/index.html"), "utf8");
-const html     = template.replace("<div id=\"root\"></div>", `<div id="root">${body}</div>`);
-const markup   = appendUniversalPortals(html);
+const html = template.replace("<!-- head -->", headTags).replace("<div id=\"root\"></div>", `<div id="root">${body}</div>`);
 
 res.status(200).send(markup);
 ```
@@ -79,10 +77,7 @@ res.status(200).send(markup);
 
 It is important to make sure that React application code is using the same instance of the library
 as code responsible for handling rendering on the server. In other words, there must be only one
-instance of the portals variable in the process. The problem occurs when you import
-`appendUniversalPortals` from `node_modules` on the server but use a bundle with its own instance to
-render an application.
-
+instance of the portals variable in the process.
 The cleanest solution is to mark react-portal-universal as an external dependency in your bundler of choice. Here is how to do this in webpack.
 
 ```js

@@ -1,51 +1,44 @@
-import * as React from "react";
-import { createUniversalPortal, flushUniversalPortals } from "../src";
-import { appendUniversalPortals } from "../src/server";
+/**
+ * @jest-environment jsdom
+ */
+import "@testing-library/jest-dom/extend-expect";
+import "@testing-library/jest-dom";
+import React from "react";
+import Portal from "./../src/index";
+import { PortalExtractor } from "../src/server";
+import { renderToString } from "react-dom/server";
+
+const Component = () => {
+  return (
+    <body>
+      <Portal name="body" selector="#portal-selector">
+        <div>Hello world!</div>
+      </Portal>
+      <Portal name="head" selector="head">
+        <title>Hello world!</title>
+      </Portal>
+      <div>Hey</div>
+    </body>
+  );
+};
 
 describe("server-side", () => {
-  beforeEach(() => {
-    flushUniversalPortals();
+  it("should don't render portal on server", () => {
+    const extractor = new PortalExtractor();
+    const html = renderToString(extractor.collectPortals(<Component />));
+
+    expect(html).toBe("<body><div>Hey</div></body>")
   });
 
-  describe("appendUniversalPortals", () => {
-    it("adds static mackup from portals to rendered HTML", () => {
-      const html = `
-        <html>
-          <head>
-            <meta charset="utf-8" />
-          </head>
-          <body>
-            <div id="root"></div>
-          </body>
-        </html>
-      `;
-      createUniversalPortal(<title>Hello, World!</title>, "head");
-      createUniversalPortal(<h1>Hello, World!</h1>, "body");
-      const withStaticMarkup = appendUniversalPortals(html);
+  it("should be able to get portalContent through extractor", () => {
+    const extractor = new PortalExtractor();
+    renderToString(extractor.collectPortals(<Component />));
 
-      expect(withStaticMarkup.includes("<title>Hello, World!</title>"));
-      expect(withStaticMarkup.includes("<h1>Hello, World!</h1>"));
-      expect(withStaticMarkup).toMatchSnapshot();
-    });
-
-    it("doesn't render non-latin characters as HTML entities", () => {
-      const html = `
-        <html>
-          <head>
-            <meta charset="utf-8" />
-          </head>
-          <body>
-            <div id="root"></div>
-          </body>
-        </html>
-      `;
-      createUniversalPortal(<title>Привет, мир!</title>, "head");
-      createUniversalPortal(<h1>Привет, мир!</h1>, "body");
-      const withStaticMarkup = appendUniversalPortals(html);
-
-      expect(withStaticMarkup.includes("<title>Привет, мир!</title>"));
-      expect(withStaticMarkup.includes("<h1>Привет, мир!</h1>"));
-      expect(withStaticMarkup).toMatchSnapshot();
-    });
-  });
+    expect(extractor.getPortals().head).toBe(
+      '<title data-universal-portal="" data-reactroot="">Hello world!</title>'
+    );
+    expect(extractor.getPortals().body).toBe(
+      '<div data-universal-portal="" data-reactroot="">Hello world!</div>'
+    );
+  })
 });

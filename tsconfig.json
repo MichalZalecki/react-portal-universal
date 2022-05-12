@@ -5,9 +5,9 @@
     "jsx": "react",
     "strict": true,
     "outDir": "lib",
-    "declaration": true
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

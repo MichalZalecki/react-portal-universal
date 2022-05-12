@@ -1,26 +1,22 @@
-import * as React from "react";
-import { createUniversalPortal, flushUniversalPortals } from "../src";
+/**
+ * @jest-environment jsdom
+ */
+import "@testing-library/jest-dom/extend-expect";
+import "@testing-library/jest-dom";
+import { JSDOM } from "jsdom";
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import Portal from "./../src/index";
 
 describe("client-side", () => {
-  beforeEach(() => {
-    flushUniversalPortals();
-  });
+  jest.useFakeTimers();
+  it("should render Portal", () => {
+    render(
+      <Portal name="head" selector="head">
+        <title>Hello world!</title>
+      </Portal>
+    );
 
-  describe("createUniversalPortal", () => {
-    it("does not render anything on the server", () => {
-      expect(createUniversalPortal(<h1>Hello, World!</h1>, "#root")).toBe(null);
-    });
-  });
-
-  describe("flushUniversalPortals", () => {
-    it("returns pairs of children and selector removing old tuples", () => {
-      const title = <title>Hello, World!</title>;
-      const heading = <h1>Hello, World!</h1>;
-      createUniversalPortal(title, "head");
-      createUniversalPortal(heading, "body");
-
-      expect(flushUniversalPortals()).toEqual([[title, "head"], [heading, "body"]]);
-      expect(flushUniversalPortals()).toEqual([]);
-    });
+    expect(screen.queryByText("Hello world!")).not.toBe(document.head);
   });
 });
